@@ -15,7 +15,6 @@ public class Intake extends SubsystemBase {
     TalonFX VerticalUp = new TalonFX(0);
     TalonFX VerticalDown = new TalonFX(2);
 
-  @Override
   public void periodic() {
         // This method will be called once per scheduler run
   }

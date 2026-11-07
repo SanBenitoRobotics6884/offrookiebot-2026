@@ -9,20 +9,18 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Storage extends SubsystemBase {
-  TalonFX Spinny;
+  TalonFX m_TalonFX = new TalonFX(1);
+TalonFX m_TalonFX2 = new TalonFX(2);
+TalonFX m_TalonFX3 = new TalonFX(1);
+TalonFX m_TalonFX4 = new TalonFX(1);
   public Storage() {
-    Spinny = new TalonFX(2);
   }
 
   @Override
   public void periodic() {
+    
   }
-    public void forward(){
-
-    Spinny.set(1);
-  }
-  public void Backward(){
-
-    Spinny.set(-1);
+  public void storageout(){
+    m_TalonFX.set(1); 
   }
 }
