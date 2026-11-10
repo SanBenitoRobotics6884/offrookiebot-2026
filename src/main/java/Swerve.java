@@ -5,43 +5,45 @@
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveModule;
 import com.ctre.phoenix6.hardware.CANcoder;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Swerve{
-  private final TalonFX;
+public class Swerve extends SubsystemBase{
+//Make basic drive and then name the motor after the drive motor
+  private TalonFX steerMotor;
+  private TalonFX driveMotor;
 
-//Make basic tank drive and then name the motor after the drive motor
-private final Steer TalonFX;
+  private Rotation2d angleOffset;
 
 //Make basic tank drive and then name the motor after the steer motor
-private final CANcoder absoluteEncoder;
+private CANcoder absoluteEncoder;
 
 private final PIDController steerPID = new PIDController(1.5, 0, 0);
 
 
-public SwerveModule(int driveID, int steerID, int encoderID, Rotation2d offset) {
+public void SwerveModule(int driveID, int steerID, int encoderID, Rotation2d offset) {
     this. driveMotor = new TalonFX(driveID); 
     this. steerMotor = new TalonFX(steerID);
     this. absoluteEncoder = new CANcoder(encoderID);
-    this.angleOffset = offset;
+    this. angleOffset = offset;
   
   steerPID.enableContinuousInput(-Math.PI, Math.PI);
   }
 
 
 public SwerveModulePosition getPosition() {
-    double distanceMeters = driveMotor.getPosition().getValueAsDouble() * Constants.DriveConversionFactor;
-    Return new SwerveModulePosition(distanceMeters, getAbsoluteAngle());
+    double distanceMeters = driveMotor.getPosition().getValueAsDouble() * /* Constants.DriveConversionFactor */ 10;
+    return new SwerveModulePosition(distanceMeters, getAbsoluteAngle());
   }
   //replace driveID and encoderID with actual id's later
 
-publicRotation2d getAbsoluteAngle(){
-  double radians = Math.toRadians(absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 360);
-
-}
+  public Rotation2d getAbsoluteAngle(){
+    double radians = Math.toRadians(absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 360);
+    return new Rotation2d(radians);
+  }
 
 
 
